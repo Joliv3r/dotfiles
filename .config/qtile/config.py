@@ -29,6 +29,8 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 # from libqtile.utils import guess_terminal
 
+import psutil
+
 mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
@@ -85,8 +87,8 @@ keys = [
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "shift"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "space", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    # Key([mod], "space", lazy.spawn("dmenu -b"), desc="Spawn a command using a prompt widget"),
+    # Key([mod], "space", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod], "space", lazy.spawn("rofi -show drun"), desc="Spawn a command using a prompt widget"),
 
     # Volume control
     Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer sset Master 10%+"), desc="Raise volume"),
@@ -206,6 +208,25 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
+def dynamic_battery_icon():
+    bat = psutil.sensors_battery()
+    bat_icons = [
+        "",
+        "",
+        "",
+        "",
+        "",
+    ]
+    if bat.percent < 10:
+        return bat_icons[0]
+    elif bat.percent < 45:
+        return bat_icons[1]
+    elif bat.percent < 70:
+        return bat_icons[2]
+    elif bat.percent < 90:
+        return bat_icons[3]
+    return bat_icons[4]
+
 
 screens = [
     Screen(
@@ -215,20 +236,12 @@ screens = [
                     padding=10,
                     linewidth=0,
                 ),
-                # widget.CurrentLayout(),
                 widget.GroupBox(
                     highlight_method='block',
                     this_current_screen_border=colors[7],
                     rounded=False,
                 ),
-                # widget.Prompt(),
                 widget.WindowName(),
-                # widget.Chord(
-                #     chords_colors={
-                #         "launch": ("#ff0000", "#ffffff"),
-                #     },
-                #     name_transform=lambda name: name.upper(),
-                # ),
                 widget.Wlan(
                     interface='wlp1s0',
                     format='{essid} {percent:2.0%}',
@@ -241,35 +254,31 @@ screens = [
                     foreground=colors[8],
                 ),
                 widget.CPU(
+                    format=' {freq_current}GHz {load_percent}%',
                     background=colors[3],
                     foreground=colors[8],
                 ),
                 widget.Memory(
                     background=colors[4],
                     foreground=colors[8],
+                    format="󰆚 {MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
                 ),
                 widget.Volume(
                     background=colors[5],
                     foreground=colors[8],
                     fmt='Vol: {}',
                 ),
-                # widget.TextBox("default config", name="default"),
-                # widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
                 widget.Battery(
-                    format="Battery: {percent:2.0%}",
-                    charge_char="Charging 󱐋",
+                    format=f"{dynamic_battery_icon()}  "+"{percent:2.0%}",
+                    charge_char="Charging 󰂄",
                     background=colors[6],
                     foreground=colors[8],
                 ),
-                # widget.Systray(),
                 widget.Clock(
                     background=colors[7],
                     foreground=colors[8],
                     format="%A, %B %d, %H:%M",
                 ),
-                # widget.QuickExit(),
             ],
             24,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
