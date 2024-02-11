@@ -108,6 +108,7 @@ for vt in range(1, 8):
     )
 
 
+# Groups will currently break if named
 groups = [Group(str(i+1)) for i in range(9)]
 
 for i in groups:
@@ -193,7 +194,7 @@ colors = [
     "#0080ff",  # Blue
     "#800099",  # Indigo
     "#ee82ee",  # Violet
-    "#111111",  # Black for text
+    "#111111",  # Text colors for widgets in rainbow
 ]
 
 
@@ -211,12 +212,14 @@ screens = [
         top=bar.Bar(
             [
                 widget.Sep(
-                    padding = 10,
-                    linewidth = 0,
+                    padding=10,
+                    linewidth=0,
                 ),
                 # widget.CurrentLayout(),
                 widget.GroupBox(
-
+                    highlight_method='block',
+                    this_current_screen_border=colors[7],
+                    rounded=False,
                 ),
                 # widget.Prompt(),
                 widget.WindowName(),
