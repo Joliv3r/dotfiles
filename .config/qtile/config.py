@@ -183,37 +183,89 @@ layouts = [
     # layout.Zoomy(),
 ]
 
+
+colors = [
+    "#1e1e1e",  # Background color
+    "#ff0000",  # Red
+    "#ffa500",  # Orange
+    "#ffff00",  # Yellow
+    "#00ff00",  # Green
+    "#0080ff",  # Blue
+    "#800099",  # Indigo
+    "#ee82ee",  # Violet
+    "#111111",  # Black for text
+]
+
+
 widget_defaults = dict(
-    font="sans",
-    fontsize=12,
+    font="mononoki nerd font",
+    fontsize=14,
     padding=3,
-    background="#1e1e1e"
+    background=colors[0],
 )
 extension_defaults = widget_defaults.copy()
 
+
 screens = [
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
-                widget.CurrentLayout(),
-                widget.GroupBox(),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
+                widget.Sep(
+                    padding = 10,
+                    linewidth = 0,
                 ),
-                widget.Wlan(interface='wlp1s0', format='{essid} {percent:2.0%}'),
-                widget.Volume(fmt='Volume: {}'),
+                # widget.CurrentLayout(),
+                widget.GroupBox(
+
+                ),
+                # widget.Prompt(),
+                widget.WindowName(),
+                # widget.Chord(
+                #     chords_colors={
+                #         "launch": ("#ff0000", "#ffffff"),
+                #     },
+                #     name_transform=lambda name: name.upper(),
+                # ),
+                widget.Wlan(
+                    interface='wlp1s0',
+                    format='{essid} {percent:2.0%}',
+                    background=colors[1],
+                    foreground=colors[8],
+                ),
+                widget.Net(
+                    format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
+                    background=colors[2],
+                    foreground=colors[8],
+                ),
+                widget.CPU(
+                    background=colors[3],
+                    foreground=colors[8],
+                ),
+                widget.Memory(
+                    background=colors[4],
+                    foreground=colors[8],
+                ),
+                widget.Volume(
+                    background=colors[5],
+                    foreground=colors[8],
+                    fmt='Vol: {}',
+                ),
                 # widget.TextBox("default config", name="default"),
                 # widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                widget.Battery(format="Battery: {percent:2.0%}"),
-                widget.Systray(),
-                widget.Clock(format="%d-%m-%Y %H:%M"),
+                widget.Battery(
+                    format="Battery: {percent:2.0%}",
+                    charge_char="Charging 󱐋",
+                    background=colors[6],
+                    foreground=colors[8],
+                ),
+                # widget.Systray(),
+                widget.Clock(
+                    background=colors[7],
+                    foreground=colors[8],
+                    format="%A, %B %d, %H:%M",
+                ),
                 # widget.QuickExit(),
             ],
             24,
