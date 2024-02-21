@@ -250,9 +250,9 @@ c.bindings.commands["insert"] = {
 
 # Privacy
 c.content.headers.do_not_track = True
-c.content.javascript.enabled = False
+# c.content.javascript.enabled = False
 c.content.xss_auditing = True
-c.content.webgl = False
+# c.content.webgl = False
 c.content.headers.accept_language = "en-US;q=0.5"
 c.content.headers.custom = {"accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"}
 c.content.cookies.accept = "no-3rdparty"
@@ -264,14 +264,14 @@ if qutebrowser_version >= (2, 0, 0):
 else:
 	c.content.host_blocking.lists.append(adblock_lists)
 
-for k in ["youtube.com", "naob.no", "openstreetmap.org",
-         "docs.python.org"]:
-	config.set("content.javascript.enabled", True, pattern=f"*://"+k+"/*")
-	config.set("content.javascript.enabled", True, pattern=f"*://www."+k+"/*")
+# for k in ["youtube.com", "naob.no", "openstreetmap.org",
+#          "docs.python.org"]:
+# 	config.set("content.javascript.enabled", True, pattern=f"*://"+k+"/*")
+# 	config.set("content.javascript.enabled", True, pattern=f"*://www."+k+"/*")
 
 c.url.searchengines = {
 
-	"DEFAULT" : "https://searx.fmac.xyz/?q={}",
+	"DEFAULT" : "https://duckduckgo.com/?q={}",
 	"arch"    : "https://wiki.archlinux.org/?search={}",
 	"pkg"     : "https://archlinux.org/packages/?q={}",
 	"aur"     : "https://aur.archlinux.org/packages/?K={}",
@@ -283,9 +283,6 @@ c.url.searchengines = {
 	"naob"    : "https://naob.no/søk/{}",
 	"snl"     : "https://snl.no/{}",
 	"rplgy"   : "https://repology.org/projects/?search={}",
-	"nixpkg"  : "https://search.nixos.org/packages?query={}",
-	"nixpkgs" : "https://github.com/NixOS/nixpkgs/search?q={}",
-	"nixopt"  : "https://search.nixos.org/options?query={}",
 	"man"     : "https://man.archlinux.org/search?q={}",
 	"wayback" : "https://web.archive.org/web/*/{}",
 	"ctan"    : "https://ctan.org/search?phrase={}",

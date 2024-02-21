@@ -1,4 +1,4 @@
-# Copyright (c) 2010 Aldo Cortesi
+#ttery Copyright (c) 2010 Aldo Cortesi
 # Copyright (c) 2010, 2014 dequis
 # Copyright (c) 2012 Randall Ma
 # Copyright (c) 2012-2014 Tycho Andersen
@@ -33,7 +33,8 @@ import psutil
 
 mod = "mod4"
 terminal = "alacritty"
-browser = "firefox"
+browser = "qutebrowser"
+
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -84,6 +85,7 @@ keys = [
         desc="Toggle fullscreen on the focused window",
     ),
     Key([mod], "x", lazy.window.toggle_minimize(), desc="Minimize current window"),
+    Key([mod, "shift"], "x", lazy.group.unminimize_all(), desc="Unminimizes all windows" ),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "shift"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
@@ -94,6 +96,9 @@ keys = [
     Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer sset Master 10%+"), desc="Raise volume"),
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer sset Master 10%-"), desc="Lower volume"),
     Key([], "XF86AudioMute", lazy.spawn("amixer sset Master toggle"), desc="Toggle volume"),
+
+    # Meme
+    Key([mod], "a", lazy.spawn('firefox "https://youtu.be/dQw4w9WgXcQ?si=c9d29RirqWIJoDp"'), lazy.spawn('amixer sset Master unmute && amixer sset Master 100%')),
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -221,7 +226,7 @@ def dynamic_battery_icon():
         return bat_icons[0]
     elif bat.percent < 45:
         return bat_icons[1]
-    elif bat.percent < 70:
+    elif bat.percent < 60:
         return bat_icons[2]
     elif bat.percent < 90:
         return bat_icons[3]
@@ -244,40 +249,43 @@ screens = [
                 widget.WindowName(),
                 widget.Wlan(
                     interface='wlp1s0',
-                    format='{essid} {percent:2.0%}',
-                    background=colors[1],
-                    foreground=colors[8],
+                    format='| {essid} {percent:2.0%}',
+                    # background=colors[1],
+                    # foreground=colors[8],
                 ),
                 widget.Net(
-                    format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
-                    background=colors[2],
-                    foreground=colors[8],
+                    format='| {down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
+                    # background=colors[2],
+                    # foreground=colors[8],
                 ),
                 widget.CPU(
-                    format=' {freq_current}GHz {load_percent}%',
-                    background=colors[3],
-                    foreground=colors[8],
+                    format='|  {freq_current}GHz {load_percent}%',
+                    # background=colors[3],
+                    # foreground=colors[8],
                 ),
                 widget.Memory(
-                    background=colors[4],
-                    foreground=colors[8],
-                    format="󰆚 {MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
+                    # background=colors[4],
+                    # foreground=colors[8],
+                    format="| 󰆚 {MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
                 ),
                 widget.Volume(
-                    background=colors[5],
-                    foreground=colors[8],
-                    fmt='Vol: {}',
+                    # background=colors[5],
+                    # foreground=colors[8],
+                    fmt='| Vol: {}',
                 ),
                 widget.Battery(
-                    format=f"{dynamic_battery_icon()}  "+"{percent:2.0%}",
+                    format=f"| {dynamic_battery_icon()}  "+"{percent:2.0%}",
+                    show_short_text=False,
                     charge_char="Charging 󰂄",
-                    background=colors[6],
-                    foreground=colors[8],
+                    full_char="| Full",
+                    update_interval=60,
+                    # background=colors[6],
+                    # foreground=colors[8],
                 ),
                 widget.Clock(
-                    background=colors[7],
-                    foreground=colors[8],
-                    format="%A, %B %d, %H:%M",
+                    # background=colors[7],
+                    # foreground=colors[8],
+                    format="| %A, %B %d, %H:%M",
                 ),
             ],
             24,
