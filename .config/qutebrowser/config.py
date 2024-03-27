@@ -11,7 +11,7 @@ c_black = "#161616"
 c_dgrey = "#2a2a2a"
 c_background = "#202020"
 
-font = "11pt tamzen"
+font = "11pt mononoki"
 
 
 if qutebrowser_version >= (2, 0, 0):
@@ -89,7 +89,7 @@ c.content.pdfjs = True
 
 
 # Fonts
-c.fonts.hints = "8pt tamzen"
+c.fonts.hints = "8pt mononoki"
 c.fonts.completion.category = "bold " + font
 c.fonts.debug_console = font
 c.fonts.downloads = font
@@ -118,6 +118,7 @@ c.colors.webpage.bg = c_background
 # TODO: Make work with qtile
 # c.editor.command = ["sh", "-c", "bspc rule -a qute-edit --one-shot state=pseudo_tiled;"
 # + "st -c qute-edit -e vim -f {file} -c 'normal {line}G{column0}l' -c 'nnoremap <CR> ZZ'"]
+c.editor.command = ["qtile", "run-cmd", "--float", "alacritty", "-e", "nvim", "{file}", "-c", "normal {line}G{column0}1"]
 
 # Binds for modes other than normal mode (John-Aslak style)
 # config.bind("<Shift-Esc>", "mode-enter normal", mode="passthrough")
@@ -201,6 +202,9 @@ c.bindings.commands["normal"] = {
 	"cIH":"config-cycle -p    -u *://*.{url:host}/* content.images ;; reload",
 	"ciu":"config-cycle -p -t -u {url} content.images ;; reload",
 	"cIu":"config-cycle -p    -u {url} content.images ;; reload",
+
+    # Other custom stuff (non-John Aslak)
+    "e":"spawn firefox {url}",
 }
 
 # Bind away <Alt-(num)>
@@ -293,6 +297,8 @@ c.url.searchengines = {
 
 	"w"       : "https://en.wikipedia.org/w/index.php?search={}",
 	"wt"      : "https://en.wiktionary.org/w/index.php?search={}",
+
+    "regs"    : "https://wcaregs.netlify.app/#{}"
 }
 
 # explicitly search:
