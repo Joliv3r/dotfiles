@@ -61,6 +61,7 @@ keys = [
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    Key([mod], "s", lazy.spawn("flameshot gui"), desc="Flameshot"),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -73,7 +74,7 @@ keys = [
         desc="Toggle between split and unsplit sides of stack",
     ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod], "c", lazy.spawn(f"qtile run-cmd --float {terminal}")),
+    Key([mod], "c", lazy.spawn(f"qtile run-cmd --float {terminal}"), desc="Launch floating terminal"),
     Key([mod], "b", lazy.spawn(browser), desc="Launch browser"),
 
     # Toggle between different layouts as defined below
@@ -99,6 +100,10 @@ keys = [
     Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer sset Master 10%+"), desc="Raise volume"),
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer sset Master 10%-"), desc="Lower volume"),
     Key([], "XF86AudioMute", lazy.spawn("amixer sset Master toggle"), desc="Toggle volume"),
+
+    # Keyboard layout shenanigans
+    Key([mod], "u", lazy.spawn("setxkbmap -layout us -option ctrl:nocaps"), desc="Enable us keyboard layout"),
+    Key([mod, "shift"], "u", lazy.spawn("setxkbmap -layout no -option ctrl:nocaps"), desc="Enable no keyboard layout"),
 
     # Meme
     Key([mod], "a", lazy.spawn('firefox "https://youtu.be/dQw4w9WgXcQ?si=c9d29RirqWIJoDp"'), lazy.spawn('amixer sset Master unmute && amixer sset Master 100%')),
