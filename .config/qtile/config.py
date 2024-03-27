@@ -30,6 +30,7 @@ from libqtile.lazy import lazy
 # from libqtile.utils import guess_terminal
 
 import psutil
+from socket import gethostname
 
 mod = "mod4"
 terminal = "alacritty"
@@ -72,6 +73,7 @@ keys = [
         desc="Toggle between split and unsplit sides of stack",
     ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "c", lazy.spawn(f"qtile run-cmd --float {terminal}")),
     Key([mod], "b", lazy.spawn(browser), desc="Launch browser"),
 
     # Toggle between different layouts as defined below
@@ -91,6 +93,7 @@ keys = [
     Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     # Key([mod], "space", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod], "space", lazy.spawn("rofi -show drun"), desc="Spawn a command using a prompt widget"),
+    Key([mod], "s", lazy.spawn("flameshot gui"), desc="Flameshot"),
 
     # Volume control
     Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer sset Master 10%+"), desc="Raise volume"),
@@ -273,15 +276,15 @@ screens = [
                     # foreground=colors[8],
                     fmt='| Vol: {}',
                 ),
-                widget.Battery(
-                    format=f"| {dynamic_battery_icon()}  "+"{percent:2.0%}",
-                    show_short_text=False,
-                    charge_char="Charging 󰂄",
-                    full_char="| Full",
-                    update_interval=60,
-                    # background=colors[6],
-                    # foreground=colors[8],
-                ),
+                # widget.Battery(
+                #     format=f"| {dynamic_battery_icon()}  "+"{percent:2.0%}",
+                #     show_short_text=False,
+                #     charge_char="Charging 󰂄",
+                #     full_char="| Full",
+                #     update_interval=60,
+                #     # background=colors[6],
+                #     # foreground=colors[8],
+                # ),
                 widget.Clock(
                     # background=colors[7],
                     # foreground=colors[8],
@@ -292,11 +295,80 @@ screens = [
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
+        wallpaper="/usr/share/archlinux-betterlockscreen/wallpapers/mystery-3840x2160.jpg",
+        wallpaper_mode="fill",
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
         # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
         # x11_drag_polling_rate = 60,
     ),
+
+    Screen(
+        top=bar.Bar(
+            [
+                widget.Sep(
+                    padding=10,
+                    linewidth=0,
+                ),
+                widget.GroupBox(
+                    highlight_method='block',
+                    this_current_screen_border=colors[7],
+                    rounded=False,
+                ),
+                widget.WindowName(),
+                widget.Wlan(
+                    interface='wlp1s0',
+                    format='| {essid} {percent:2.0%}',
+                    # background=colors[1],
+                    # foreground=colors[8],
+                ),
+                widget.Net(
+                    format='| {down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
+                    # background=colors[2],
+                    # foreground=colors[8],
+                ),
+                widget.CPU(
+                    format='|  {freq_current}GHz {load_percent}%',
+                    # background=colors[3],
+                    # foreground=colors[8],
+                ),
+                widget.Memory(
+                    # background=colors[4],
+                    # foreground=colors[8],
+                    format="| 󰆚 {MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
+                ),
+                widget.Volume(
+                    # background=colors[5],
+                    # foreground=colors[8],
+                    fmt='| Vol: {}',
+                ),
+                # widget.Battery(
+                #     format=f"| {dynamic_battery_icon()}  "+"{percent:2.0%}",
+                #     show_short_text=False,
+                #     charge_char="Charging 󰂄",
+                #     full_char="| Full",
+                #     update_interval=60,
+                #     # background=colors[6],
+                #     # foreground=colors[8],
+                # ),
+                widget.Clock(
+                    # background=colors[7],
+                    # foreground=colors[8],
+                    format="| %A, %B %d, %H:%M",
+                ),
+            ],
+            20,
+            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+        ),
+        wallpaper="/usr/share/archlinux-betterlockscreen/wallpapers/mystery-3840x2160.jpg",
+        wallpaper_mode="fill",
+        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
+        # By default we handle these events delayed to already improve performance, however your system might still be struggling
+        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
+        # x11_drag_polling_rate = 60,
+    ),
+
 ]
 
 # Drag floating layouts.

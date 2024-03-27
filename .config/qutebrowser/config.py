@@ -118,6 +118,7 @@ c.colors.webpage.bg = c_background
 # TODO: Make work with qtile
 # c.editor.command = ["sh", "-c", "bspc rule -a qute-edit --one-shot state=pseudo_tiled;"
 # + "st -c qute-edit -e vim -f {file} -c 'normal {line}G{column0}l' -c 'nnoremap <CR> ZZ'"]
+c.editor.command = ["qtile", "run-cmd", "--float", "alacritty", "-e", "nvim", "{file}", "-c", "normal {line}G{column0}l"]
 
 # Binds for modes other than normal mode (John-Aslak style)
 # config.bind("<Shift-Esc>", "mode-enter normal", mode="passthrough")
