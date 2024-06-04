@@ -419,7 +419,8 @@ wl_input_rules = None
 wmname = "LG3D"
 
 
-@hook.subscribe.startup_once
-def autostart():
-    home = os.path.expanduser('/usr/local/bin/background')
-    subprocess.Popen([home])
+if gethostname() == 'hilbert':
+    @hook.subscribe.startup_once
+    def autostart():
+        home = os.path.expanduser('/usr/local/bin/background')
+        subprocess.Popen([home])
