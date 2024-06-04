@@ -24,13 +24,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from libqtile import bar, layout, qtile, widget
+from libqtile import bar, layout, qtile, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 # from libqtile.utils import guess_terminal
 
 import psutil
 from socket import gethostname
+
+import os
+import subprocess
 
 mod = "mod4"
 terminal = "alacritty"
@@ -252,11 +255,6 @@ Sep = widget.Sep(
     linewidth=0,
 )
 
-GroupBox = widget.GroupBox(
-    highlight_method='block',
-    this_current_screen_border=colors[7],
-    rounded=False,
-)
 
 WindowName = widget.WindowName()
 
@@ -320,7 +318,11 @@ screens = [
         top=bar.Bar(
             [
                 Sep,
-                GroupBox,
+                widget.GroupBox(
+                    highlight_method='block',
+                    this_current_screen_border=colors[7],
+                    rounded=False,
+                ),
                 WindowName,
                 Wlan,
                 Net,
@@ -344,7 +346,11 @@ screens = [
         top=bar.Bar(
             [
                 Sep,
-                GroupBox,
+                widget.GroupBox(
+                    highlight_method='block',
+                    this_current_screen_border=colors[7],
+                    rounded=False,
+                ),
                 WindowName,
                 Wlan,
                 Net,
@@ -411,3 +417,9 @@ wl_input_rules = None
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+
+
+@hook.subscribe.startup_once
+def autostart():
+    home = os.path.expanduser('/usr/local/bin/background')
+    subprocess.Popen([home])
