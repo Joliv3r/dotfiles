@@ -46,6 +46,8 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
+    Key([mod, "shift"], "i", lazy.to_screen(0), desc="Move focus to monitor 0"),
+    Key([mod, "shift"], "o", lazy.to_screen(1), desc="Move focus to monitor 1"),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
@@ -93,7 +95,8 @@ keys = [
     Key([mod, "shift"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     # Key([mod], "space", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod], "space", lazy.spawn("rofi -show drun"), desc="Spawn a command using a prompt widget"),
+    Key([mod], "space", lazy.spawn("dmenu_run"), desc="Spawn a command using a prompt widget"),
+    Key([mod], "p", lazy.spawn("passmenu"), desc="Spawn a command using a prompt widget"),
     Key([mod], "s", lazy.spawn("flameshot gui"), desc="Flameshot"),
 
     # Volume control
@@ -241,66 +244,95 @@ def dynamic_battery_icon():
     return bat_icons[4]
 
 
+
+Sep = widget.Sep(
+    padding=10,
+    linewidth=0,
+)
+
+GroupBox = widget.GroupBox(
+    highlight_method='block',
+    this_current_screen_border=colors[7],
+    rounded=False,
+)
+
+WindowName = widget.WindowName()
+
+Wlan = widget.Wlan(
+    interface='wlp1s0',
+    format='| {essid} {percent:2.0%}',
+    # background=colors[1],
+    # foreground=colors[8],
+)
+
+Net = widget.Net(
+    format='| {down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
+    # background=colors[2],
+    # foreground=colors[8],
+)
+
+CPU = widget.CPU(
+    format='|  {freq_current}GHz {load_percent}%',
+    # background=colors[3],
+    # foreground=colors[8],
+)
+
+Memory = widget.Memory(
+    # background=colors[4],
+    # foreground=colors[8],
+    format="| 󰆚 {MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
+)
+
+Volume = widget.Volume(
+    # background=colors[5],
+    # foreground=colors[8],
+    fmt='| Vol: {}',
+)
+
+if gethostname() == 'hausdorff':
+    Battery = widget.Sep(
+        padding = 0,
+        linewidth = 0,
+    )
+else:
+    Battery = widget.Battery(
+        format=f"| {dynamic_battery_icon()}  "+"{percent:2.0%}",
+        show_short_text=False,
+        charge_char="Charging 󰂄",
+        full_char="| Full",
+        update_interval=60,
+        # background=colors[6],
+        # foreground=colors[8],
+    )
+
+
+Clock = widget.Clock(
+    # background=colors[7],
+    # foreground=colors[8],
+    format="| %A, %B %d, %H:%M",
+)
+
+
 screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.Sep(
-                    padding=10,
-                    linewidth=0,
-                ),
-                widget.GroupBox(
-                    highlight_method='block',
-                    this_current_screen_border=colors[7],
-                    rounded=False,
-                ),
-                widget.WindowName(),
-                widget.Wlan(
-                    interface='wlp1s0',
-                    format='| {essid} {percent:2.0%}',
-                    # background=colors[1],
-                    # foreground=colors[8],
-                ),
-                widget.Net(
-                    format='| {down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
-                    # background=colors[2],
-                    # foreground=colors[8],
-                ),
-                widget.CPU(
-                    format='|  {freq_current}GHz {load_percent}%',
-                    # background=colors[3],
-                    # foreground=colors[8],
-                ),
-                widget.Memory(
-                    # background=colors[4],
-                    # foreground=colors[8],
-                    format="| 󰆚 {MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
-                ),
-                widget.Volume(
-                    # background=colors[5],
-                    # foreground=colors[8],
-                    fmt='| Vol: {}',
-                ),
-                # widget.Battery(
-                #     format=f"| {dynamic_battery_icon()}  "+"{percent:2.0%}",
-                #     show_short_text=False,
-                #     charge_char="Charging 󰂄",
-                #     full_char="| Full",
-                #     update_interval=60,
-                #     # background=colors[6],
-                #     # foreground=colors[8],
-                # ),
-                widget.Clock(
-                    # background=colors[7],
-                    # foreground=colors[8],
-                    format="| %A, %B %d, %H:%M",
-                ),
+                Sep,
+                GroupBox,
+                WindowName,
+                Wlan,
+                Net,
+                CPU,
+                Memory,
+                Volume,
+                Battery,
+                Clock,
             ],
             24,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
-        wallpaper="/usr/share/archlinux-betterlockscreen/wallpapers/mystery-3840x2160.jpg",
+        wallpaper = wallpaper1,
         wallpaper_mode="fill",
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
@@ -311,62 +343,22 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.Sep(
-                    padding=10,
-                    linewidth=0,
-                ),
-                widget.GroupBox(
-                    highlight_method='block',
-                    this_current_screen_border=colors[7],
-                    rounded=False,
-                ),
-                widget.WindowName(),
-                widget.Wlan(
-                    interface='wlp1s0',
-                    format='| {essid} {percent:2.0%}',
-                    # background=colors[1],
-                    # foreground=colors[8],
-                ),
-                widget.Net(
-                    format='| {down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
-                    # background=colors[2],
-                    # foreground=colors[8],
-                ),
-                widget.CPU(
-                    format='|  {freq_current}GHz {load_percent}%',
-                    # background=colors[3],
-                    # foreground=colors[8],
-                ),
-                widget.Memory(
-                    # background=colors[4],
-                    # foreground=colors[8],
-                    format="| 󰆚 {MemUsed:.0f}{mm}/{MemTotal:.0f}{mm}",
-                ),
-                widget.Volume(
-                    # background=colors[5],
-                    # foreground=colors[8],
-                    fmt='| Vol: {}',
-                ),
-                # widget.Battery(
-                #     format=f"| {dynamic_battery_icon()}  "+"{percent:2.0%}",
-                #     show_short_text=False,
-                #     charge_char="Charging 󰂄",
-                #     full_char="| Full",
-                #     update_interval=60,
-                #     # background=colors[6],
-                #     # foreground=colors[8],
-                # ),
-                widget.Clock(
-                    # background=colors[7],
-                    # foreground=colors[8],
-                    format="| %A, %B %d, %H:%M",
-                ),
+                Sep,
+                GroupBox,
+                WindowName,
+                Wlan,
+                Net,
+                CPU,
+                Memory,
+                Volume,
+                Battery,
+                Clock,
             ],
             20,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
-        wallpaper="/usr/share/archlinux-betterlockscreen/wallpapers/mystery-3840x2160.jpg",
+        wallpaper = wallpaper2,
         wallpaper_mode="fill",
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
