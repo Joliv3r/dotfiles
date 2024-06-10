@@ -1,3 +1,21 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
+
+# Plugins
+source /home/joliver/.zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /home/joliver/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Autocompletion
+autoload -Uz compinit
+compinit
+
+# Start zsh
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
 # Git aliases
 alias gc="git commit -m"
 alias gdh="git diff HEAD"
@@ -28,23 +46,19 @@ alias sd='shutdown'
 export VISUAL=nvim
 export EDITOR=$VISUAL
 
-# Start zsh
-eval "$(starship init zsh)"
+bindkey -e
 
 # Zoxide
 eval "$(zoxide init --cmd cd zsh)"
 
 # Some Haskell shit
-[ -f "/home/joliver/.ghcup/env" ] && source "/home/joliver/.ghcup/env" # ghcup-env
+# [ -f "/home/joliver/.ghcup/env" ] && source "/home/joliver/.ghcup/env" # ghcup-env
 
 # Neofetch
 neofetch --ascii_distro puppy
 
-# Plugins
-source /home/joliver/.zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Syntax Highlighting
-source /home/joliver/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 # PATH
 PATH="$PATH:/usr/local/texlive/2023/bin/x86_64-linux/"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
