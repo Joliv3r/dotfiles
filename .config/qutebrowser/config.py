@@ -11,7 +11,7 @@ c_black = "#161616"
 c_dgrey = "#2a2a2a"
 c_background = "#202020"
 
-font = "11pt mononoki"
+font = "12pt mononoki"
 
 
 if qutebrowser_version >= (2, 0, 0):
@@ -89,7 +89,7 @@ c.content.pdfjs = True
 
 
 # Fonts
-c.fonts.hints = "8pt mononoki"
+c.fonts.hints = "10pt mononoki"
 c.fonts.completion.category = "bold " + font
 c.fonts.debug_console = font
 c.fonts.downloads = font
