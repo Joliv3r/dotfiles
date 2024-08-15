@@ -53,6 +53,7 @@ bindsym $mod+g exec $browser1
 bindsym $mod+p exec passmenu -fn 'mononoki nerd font-16'
 # bindsym $mod+p exec rofi-pass
 bindsym $mod+z exec flameshot gui
+bindsym $mod+y exec java -jar /home/joliver/cubing/TNoodle-WCA-1.2.2.jar & firefox --new-window http://localhost:2014
 
 bindsym $mod+u exec setxkbmap -layout us -option ctrl:nocaps
 bindsym $mod+Shift+u exec setxkbmap -layout no -option ctrl:nocaps
@@ -184,6 +185,8 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 # bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 bindsym $mod+Shift+q exec i3-msg exit
+bindsym mod1+l exec rm -rf /home/joliver/.tmp/i3lockimg/ && mkdir /home/joliver/.tmp/i3lockimg/ && cp $(ls /usr/share/backgrounds/pokemon/* | shuf | head -20) /home/joliver/.tmp/i3lockimg && i3lock -i /home/joliver/.tmp/i3lockimg --slideshow-interval 60 
+  
 
 # reload statusbar
 bindsym $mod+Shift+p exec pkill polybar && polybar
