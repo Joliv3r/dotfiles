@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Arguments
+direction="$1"  # "next" or "prev"
+mode="$2"       # "all" or something else
+
+# Get current workspaces and focused workspace
+workspaces_json=$(i3-msg -t get_workspaces)
+workspace_nums=($(echo "$workspaces_json" | jq '.[].num'))
+focused=$(echo "$workspaces_json" | jq '.[] | select(.focused==true) | .num')
+
+# Default range values
+n=10
+d=1
+
+if [ "$direction" == "next" ]; then
+    d=1
+    f=$((focused + 1))
+    n=$((f + 10))
+elif [ "$direction" == "prev" ]; then
+    d=-1
+    f=$((focused - 1))
+    n=$((f - 10))
+else
+    echo "Usage: $0 [next|prev] [all|...]"
+    exit 1
+fi
+
+# Loop through workspace numbers
+num=$f
+while (( $d > 0 && $num < $n )) || (( $d < 0 && $num > $n )); do
+    # Dirty way to fix sign, uses that num wil never be less than -9.
+    mod=$(((num + 10) % 10))
+    exists=false
+    for ws_num in "${workspace_nums[@]}"; do
+        if [ "$ws_num" -eq "$mod" ]; then
+            exists=true
+            break
+        fi
+    done
+
+    if [ "$exists" = false ] || [ "$mode" == "all" ]; then
+        echo "$mod"
+        break
+    fi
+    num=$((num + d))
+done

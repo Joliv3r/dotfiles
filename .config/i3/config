@@ -18,7 +18,9 @@ font pango:mononoki nerd font 8
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+exec --no-startup-id xset s off
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -44,12 +46,14 @@ set $mod Mod4
 # Set default apps
 set $browser qutebrowser
 set $browser1 firefox
+set $browser2 brave
 set $terminal alacritty
 
 # Set default keybindings for apps
 bindsym $mod+Return exec $terminal
-bindsym $mod+b exec $browser
+bindsym $mod+b exec $browser --target window https://www.archlinux.org/
 bindsym $mod+g exec $browser1
+bindsym $mod+Shift+b exec $browser2
 bindsym $mod+p exec passmenu -fn 'mononoki nerd font-16'
 # bindsym $mod+p exec rofi-pass
 bindsym $mod+z exec flameshot gui
@@ -107,7 +111,7 @@ bindsym $mod+c split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+m fullscreen toggle
+bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -158,13 +162,13 @@ bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 
-# using ./i3-workspace.py to switch between non active workspaces
-bindsym $mod+o exec --no-startup-id i3-msg workspace number $($HOME/.config/i3/i3-workspace.py next all)
-bindsym $mod+i exec --no-startup-id i3-msg workspace number $($HOME/.config/i3/i3-workspace.py prev all)
-bindsym $mod+Control+o exec --no-startup-id i3-msg move container to workspace number $($HOME/.config/i3/i3-workspace.py next not)
-bindsym $mod+Control+i exec --no-startup-id i3-msg move container to workspace number $($HOME/.config/i3/i3-workspace.py prev not)
-bindsym $mod+Shift+o exec --no-startup-id i3-msg workspace number $($HOME/.config/i3/i3-workspace.py next not)
-bindsym $mod+Shift+i exec --no-startup-id i3-msg workspace number $($HOME/.config/i3/i3-workspace.py prev not)
+# using ./i3-workspace to switch between non active workspaces
+bindsym $mod+o exec --no-startup-id i3-msg workspace number $($HOME/.config/i3/i3-workspace next all)
+bindsym $mod+i exec --no-startup-id i3-msg workspace number $($HOME/.config/i3/i3-workspace prev all)
+bindsym $mod+Control+o exec --no-startup-id i3-msg move container to workspace number $($HOME/.config/i3/i3-workspace next not)
+bindsym $mod+Control+i exec --no-startup-id i3-msg move container to workspace number $($HOME/.config/i3/i3-workspace prev not)
+bindsym $mod+Shift+o exec --no-startup-id i3-msg workspace number $($HOME/.config/i3/i3-workspace next not)
+bindsym $mod+Shift+i exec --no-startup-id i3-msg workspace number $($HOME/.config/i3/i3-workspace prev not)
 
 # move focused container to workspace
 bindsym $mod+Shift+0 move container to workspace number $ws0
@@ -185,7 +189,10 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 # bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 bindsym $mod+Shift+q exec i3-msg exit
-bindsym mod1+l exec rm -rf /home/joliver/.tmp/i3lockimg/ && mkdir /home/joliver/.tmp/i3lockimg/ && cp $(ls /usr/share/backgrounds/pokemon/* | shuf | head -20) /home/joliver/.tmp/i3lockimg && i3lock -i /home/joliver/.tmp/i3lockimg --slideshow-interval 60 
+bindsym mod1+l exec rm -rf /home/joliver/.tmp/i3lockimg/ && mkdir /home/joliver/.tmp/i3lockimg/ && cp $(ls /usr/share/backgrounds/pokemon-blurred/* | shuf | head -20) /home/joliver/.tmp/i3lockimg && i3lock -i /home/joliver/.tmp/i3lockimg --slideshow-interval 60 
+bindsym $mod+semicolon exec --no-startup-id  rofi -dpi 300 -e "$(cat /var/local/background/current_background | rev | cut --complement -c 1-4 | rev)"
+bindsym $mod+comma exec --no-startup-id  pkill background && /home/joliver/.config/scripts/background old
+bindsym $mod+period exec --no-startup-id pkill background && /home/joliver/.config/scripts/background
   
 
 # reload statusbar
@@ -248,5 +255,6 @@ client.background       #ffffff
 #         status_command i3status
 # }
 
+
 exec --no-startup-id polybar -c /home/joliver/.config/polybar/config.ini
-exec --no-startup-id background
+exec --no-startup-id /home/joliver/.config/scripts/background
