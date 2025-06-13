@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Arguments
 direction="$1"  # "next" or "prev"
