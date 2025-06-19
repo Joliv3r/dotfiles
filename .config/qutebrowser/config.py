@@ -298,7 +298,9 @@ c.url.searchengines = {
 	"w"       : "https://en.wikipedia.org/w/index.php?search={}",
 	"wt"      : "https://en.wiktionary.org/w/index.php?search={}",
 
-    "regs"    : "https://wcaregs.netlify.app/#{}"
+    "regs"    : "https://wcaregs.netlify.app/#{}",
+
+    "nixpkg"  : "https://search.nixos.org/packages?from=0&size=50&sort=relevance&type=packages&query={}"
 }
 
 # explicitly search:
