@@ -12,9 +12,12 @@ source /home/joliver/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlightin
 # Autocompletion
 autoload -Uz compinit
 compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # Start zsh
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+source $HOME/powerlevel10k/powerlevel10k.zsh-theme
+
+eval "$(direnv hook zsh)"
 
 # Git aliases
 alias gc="git commit -m"
