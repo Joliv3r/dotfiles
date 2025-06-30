@@ -31,7 +31,7 @@ alias ls='ls --color=auto'
 alias la='ls -A'
 alias grep='grep --color=auto'
 alias vim="nvim"
-alias cdd="cd /home/joliver/.dotfiles/"
+alias cdd="cd /home/joliver/dotfiles/"
 
 # Aliases for opening books
 alias galois='zathura /home/joliver/skool/books/BasicAbstractAlgebra.djvu'
@@ -332,3 +332,5 @@ _fzf_compgen_dir() {
 # zsh.nix, but I reckon that this is better because it doesn't rely on zsh.nix.
 source "$(dirname "$(realpath "$(which fzf)")")/../share/fzf/completion.zsh"
 
+
+setopt auto_cd
