@@ -33,6 +33,9 @@ bindsym XF86AudioLowerVolume exec --no-startup-id amixer sset Master 10%-
 bindsym XF86AudioMute exec --no-startup-id amixer sset Master toggle
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
+
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
 set $up k
@@ -189,7 +192,7 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 # bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 bindsym $mod+Shift+q exec i3-msg exit
-bindsym mod1+l exec rm -rf /home/joliver/.tmp/i3lockimg/ && mkdir /home/joliver/.tmp/i3lockimg/ && cp $(ls /usr/share/backgrounds/pokemon-blurred/* | shuf | head -20) /home/joliver/.tmp/i3lockimg && i3lock -i /home/joliver/.tmp/i3lockimg --slideshow-interval 60 
+bindsym mod1+l exec i3lock
 bindsym $mod+semicolon exec --no-startup-id  rofi -dpi 300 -e "$(cat /var/local/background/current_background | rev | cut --complement -c 1-4 | rev)"
 bindsym $mod+comma exec --no-startup-id  pkill background && /home/joliver/.config/scripts/background old
 bindsym $mod+period exec --no-startup-id pkill background && /home/joliver/.config/scripts/background
