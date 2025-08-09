@@ -332,3 +332,5 @@ _fzf_compgen_dir() {
 # zsh.nix, but I reckon that this is better because it doesn't rely on zsh.nix.
 source "$(dirname "$(realpath "$(which fzf)")")/../share/fzf/completion.zsh"
 
+# Lookup for norwegian-english mathematical dictionary.
+alias ord="tail -n +2 $HOME/matematisk_ordliste/verifiserte_termer.csv | fzf -d, --nth=1,2,3"
