@@ -103,7 +103,7 @@ mk-nix-shell () {
     case $1 in
       rust)
         if [ ! -f ./rust-toolchain.toml ]; then
-          printf "[toolchain]\nchannel = \"nightly\"\n" > ./rust-toolchain.toml
+          cp /etc/nixos/shell/rust-toolchain.toml ./
         fi
         cp /etc/nixos/shell/rust.nix ./default.nix
         ;;
