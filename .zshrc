@@ -30,7 +30,7 @@ alias gp="git pull"
 alias ls='ls --color=auto'
 alias la='ls -A'
 alias grep='grep --color=auto'
-alias cdd="cd /home/joliver/.dotfiles/"
+alias cdd="builtin cd /home/joliver/.dotfiles/"
 
 # Aliases for opening books
 alias galois='zathura /home/joliver/skool/books/BasicAbstractAlgebra.djvu'
@@ -126,16 +126,20 @@ alias mk_shell=mk-nix-shell
 
 
 ################################################################################
-#                         Open nvim in root of git folder
+#                         Open nvim in root of direnv or git folder
 ################################################################################
 
 nvim-cd () {
-  if GIT_ROOT_PATH="$(git rev-parse --show-toplevel 2>/dev/null)"; then
-  # if [[ $? -eq 0 ]]; then
+  if [ "$DIRENV_DIR" ]; then
     CURRENT_PATH="$(pwd)"
-    cd "$GIT_ROOT_PATH" || exit
+    builtin cd "${DIRENV_DIR:1}" || return 1
     nvim "$CURRENT_PATH/$1"
-    cd "$CURRENT_PATH" || exit
+    builtin cd "$CURRENT_PATH" || return 1
+  elif GIT_ROOT_PATH="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+    CURRENT_PATH="$(pwd)"
+    builtin cd "$GIT_ROOT_PATH" || return 1
+    nvim "$CURRENT_PATH/$1"
+    builtin cd "$CURRENT_PATH" || return 1
   else
     nvim "$1"
   fi
@@ -319,9 +323,15 @@ _fzf-edit() {
 	local NEEDS_ACCEPT="" # for when we are going to run a command
 	case "$press" in
 	ctrl-e)
-		sel="$(realpath --relative-to="$dir" "$sel")"
-		[[ "$dir" != "." ]] && builtin cd "$dir"
-		BUFFER+="$EDITOR ${(q)sel}"
+    if [ "$DIRENV_DIR" ]; then
+      customdir="${DIRENV_DIR:1}"
+    else 
+      customdir="$(_get_git_dir "$(realpath "$sel)")")"
+    fi
+		sel="$(realpath --relative-to="$customdir" "$sel")"
+    dir="$(realpath --relative-to="$customdir" "$dir")"
+		[[ "$dir" != "." ]] && builtin cd "$customdir"
+		BUFFER+="$EDITOR ${(q)sel}; builtin cd '${dir}'"
 		NEEDS_ACCEPT="true" ;;
 	ctrl-r|ctrl-o)
 		# cd without telling user for a shorter ranger command. Does not change
@@ -330,8 +340,18 @@ _fzf-edit() {
 		[[ "$dir" != "." ]] && builtin cd "$dir"
 		BUFFER=" ranger_cd --selectfile=${(q)sel}"
 		NEEDS_ACCEPT="true" ;;
-	ctrl-t) BUFFER+=" $EDITOR ${(q)sel}" && NEEDS_ACCEPT="true";;
-	ctrl-k) [[ "$dir" != "." ]] && builtin cd "$dir" ;;
+  ctrl-t)
+		cur="$(pwd)"
+    if [ $DIRENV_DIR ]; then
+      customdir=${DIRENV_DIR:1}
+    else
+      customdir="$(_get_git_dir "$(realpath "$sel)")")"
+    fi
+		sel="$(realpath --relative-to="$customdir" "$sel")"
+		dir="$(realpath --relative-to="$customdir" "$dir")"
+		[[ "$dir" != "." ]] && builtin cd "$customdir"
+		BUFFER+="$EDITOR ${(q)sel}; builtin cd '${cur}'"
+		NEEDS_ACCEPT="true" ;;ctrl-k) [[ "$dir" != "." ]] && builtin cd "$dir" ;;
 	esac
 	# Redraw the prompt before the 'accept_line' if we have cd'd, so that the
 	# user sees we've cd'd before we run our command.
