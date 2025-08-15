@@ -44,9 +44,6 @@ alias venv='source /home/joliver/.venv/bin/activate'
 # Dangerous
 alias sd='shutdown'
 
-# Direnv
-alias mk_direnv='echo use_nix > .envrc && direnv allow .'
-
 # Options
 export VISUAL=nvim
 export EDITOR=$VISUAL
@@ -67,11 +64,72 @@ PATH="$PATH:/usr/local/texlive/2023/bin/x86_64-linux/"
 
 
 ################################################################################
+#                         Make nix shells
+################################################################################
+
+_mk-direnv () {
+  echo use_nix > .envrc && direnv allow .
+}
+
+_mk-nix-shell () {
+  if [ $# -eq 0 ]; then
+    echo "No argument supplied"
+    return 1
+  else
+    if [ -f ./default.nix ]; then
+      echo -n "default.nix already exists do you really want to override it? [y/N] "
+      read answer
+      case $answer in
+        y|Y)
+          ;;
+        *)
+          echo "Nothing is being done."
+          return 1
+          ;;
+      esac
+    fi
+    if [ -f ./.envrc ]; then
+      echo -n ".envrc already exists do you want to override it? [y/N] "
+      read answer
+      case $answer in
+        y|Y)
+          REPLACE_ENVRC=true
+          ;;
+        *)
+          REPLACE_ENVRC=false
+          ;;
+      esac
+    fi
+    case $1 in
+      rust)
+        if [ ! -f ./rust-toolchain.toml ]; then
+          printf "[toolchain]\nchannel = \"nightly\"\n" > ./rust-toolchain.toml
+        fi
+        cp /etc/nixos/shell/rust.nix ./default.nix
+        ;;
+      python)
+        cp /etc/nixos/shell/python.nix ./default.nix
+        ;;
+      *)
+        echo "Invalid argument, no shell file of this type exists"
+        return 1
+        ;;
+    esac
+    if $REPLACE_ENVRC; then
+      _mk-direnv
+    fi
+  fi
+}
+
+alias mk_direnv=_mk-direnv
+alias mk_shell=_mk-nix-shell
+
+
+################################################################################
 #                         Open nvim in root of git folder
 ################################################################################
 
-nvim_cd ()
-{
+_nvim_cd () {
   if GIT_ROOT_PATH="$(git rev-parse --show-toplevel 2>/dev/null)"; then
   # if [[ $? -eq 0 ]]; then
     CURRENT_PATH="$(pwd)"
@@ -83,7 +141,7 @@ nvim_cd ()
   fi
 }
 
-alias vim=nvim_cd
+alias vim=_nvim_cd
 
 # https://gitlab.com/farlusiva/dotfiles/
 ################################################################################
