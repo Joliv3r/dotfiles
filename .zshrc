@@ -67,11 +67,11 @@ PATH="$PATH:/usr/local/texlive/2023/bin/x86_64-linux/"
 #                         Make nix shells
 ################################################################################
 
-_mk-direnv () {
+mk-direnv () {
   echo use_nix > .envrc && direnv allow .
 }
 
-_mk-nix-shell () {
+mk-nix-shell () {
   if [ $# -eq 0 ]; then
     echo "No argument supplied"
     return 1
@@ -121,15 +121,15 @@ _mk-nix-shell () {
   fi
 }
 
-alias mk_direnv=_mk-direnv
-alias mk_shell=_mk-nix-shell
+alias mk_direnv=mk-direnv
+alias mk_shell=mk-nix-shell
 
 
 ################################################################################
 #                         Open nvim in root of git folder
 ################################################################################
 
-_nvim_cd () {
+nvim-cd () {
   if GIT_ROOT_PATH="$(git rev-parse --show-toplevel 2>/dev/null)"; then
   # if [[ $? -eq 0 ]]; then
     CURRENT_PATH="$(pwd)"
@@ -141,7 +141,7 @@ _nvim_cd () {
   fi
 }
 
-alias vim=_nvim_cd
+alias vim=nvim-cd
 
 # https://gitlab.com/farlusiva/dotfiles/
 ################################################################################
