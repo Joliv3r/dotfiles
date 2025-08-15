@@ -66,6 +66,25 @@ PATH="$PATH:/usr/local/texlive/2023/bin/x86_64-linux/"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
+################################################################################
+#                         Open nvim in root of git folder
+################################################################################
+
+nvim_cd ()
+{
+  if GIT_ROOT_PATH="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+  # if [[ $? -eq 0 ]]; then
+    CURRENT_PATH="$(pwd)"
+    cd "$GIT_ROOT_PATH" || exit
+    nvim "$CURRENT_PATH/$1"
+    cd "$CURRENT_PATH" || exit
+  else
+    nvim "$1"
+  fi
+}
+
+alias vim=nvim_cd
+
 # https://gitlab.com/farlusiva/dotfiles/
 ################################################################################
 #                          fzf in the shell (config)
@@ -327,27 +346,6 @@ _fzf_compgen_dir() {
 # The fzf path could be passed onto us here with an environment variable set in
 # zsh.nix, but I reckon that this is better because it doesn't rely on zsh.nix.
 source "$(dirname "$(realpath "$(which fzf)")")/../share/fzf/completion.zsh"
-
-################################################################################
-#                         Open nvim in root of git folder
-################################################################################
-
-nvim_cd ()
-{
-  GIT_ROOT_PATH="$(git rev-parse --show-toplevel 2>/dev/null)"
-  if [[ $? -eq 0 ]]; then
-    CURRENT_PATH="$(pwd)"
-    echo "cd $GIT_ROOT_PATH"
-    cd $GIT_ROOT_PATH
-    echo "nvim $CURRENT_PATH/$1"
-    nvim "$CURRENT_PATH/$1"
-    cd $CURRENT_PATH
-  else
-    nvim $1
-  fi
-}
-
-alias vim=nvim_cd
 
 # Lookup for norwegian-english mathematical dictionary.
 alias ord="tail -n +2 $HOME/matematisk_ordliste/verifiserte_termer.csv | fzf -d, --nth=1,2,3"
