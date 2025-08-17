@@ -107,16 +107,17 @@ mk-nix-shell () {
         fi
         cp /etc/nixos/shell/rust.nix ./default.nix
         ;;
-      python)
-        cp /etc/nixos/shell/python.nix ./default.nix
-        ;;
       *)
-        echo "Invalid argument, no shell file of this type exists"
-        return 1
+        if [ -f "/etc/nixos/shell/$1.nix" ]; then
+          cp "/etc/nixos/shell/$1.nix" ./default.nix
+        else
+          echo "Invalid argument, no shell file of this type exists"
+          return 1
+        fi
         ;;
     esac
     if $REPLACE_ENVRC; then
-      _mk-direnv
+      mk-direnv
     fi
   fi
 }
@@ -204,6 +205,23 @@ _get_git_dir() {
 	while :; do
 
 		if [[ -d "$INP/.git" ]]; then
+			echo "$INP"
+			return 0
+		fi
+
+		if [[ "$INP" = "/" ]] || [[ -z $INP ]]; then
+			return 1
+		fi
+
+		INP="$(dirname "$INP")"
+	done
+}
+
+_get_direnv_dir() {
+	INP="$1"
+	while :; do
+
+		if [[ -f "$INP/.envrc" ]]; then
 			echo "$INP"
 			return 0
 		fi
@@ -323,10 +341,9 @@ _fzf-edit() {
 	local NEEDS_ACCEPT="" # for when we are going to run a command
 	case "$press" in
 	ctrl-e)
-    if [ "$DIRENV_DIR" ]; then
-      customdir="${DIRENV_DIR:1}"
-    else 
-      customdir="$(_get_git_dir "$(realpath "$sel)")")"
+    customdir="$(_get_direnv_dir "$(realpath "$sel")")"
+    if [ ! "$customdir" ]; then
+      customdir="$(_get_git_dir "$(realpath "$sel")")"
     fi
 		sel="$(realpath --relative-to="$customdir" "$sel")"
     dir="$(realpath --relative-to="$customdir" "$dir")"
@@ -342,10 +359,9 @@ _fzf-edit() {
 		NEEDS_ACCEPT="true" ;;
   ctrl-t)
 		cur="$(pwd)"
-    if [ $DIRENV_DIR ]; then
-      customdir=${DIRENV_DIR:1}
-    else
-      customdir="$(_get_git_dir "$(realpath "$sel)")")"
+    customdir="$(_get_direnv_dir "$(realpath "$sel")")"
+    if [ ! "$customdir" ]; then
+      customdir="$(_get_git_dir "$(realpath "$sel")")"
     fi
 		sel="$(realpath --relative-to="$customdir" "$sel")"
 		dir="$(realpath --relative-to="$customdir" "$dir")"
