@@ -48,6 +48,12 @@ alias sd='shutdown'
 export VISUAL=nvim
 export EDITOR=$VISUAL
 
+# JAWK-style navigation shortcuts
+alias -g ..=".."
+alias -g ...="../.."
+alias -g ....="../../.."
+alias -g .....="../../../.."
+
 bindkey -e
 
 # Zoxide
