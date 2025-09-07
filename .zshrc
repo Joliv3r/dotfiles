@@ -20,7 +20,7 @@ source $HOME/powerlevel10k/powerlevel10k.zsh-theme
 eval "$(direnv hook zsh)"
 
 # Git aliases
-alias gc="git commit -m"
+alias gc="git commit"
 alias gdh="git diff HEAD"
 alias gs="git status"
 alias ga="git add"
@@ -451,5 +451,4 @@ source "$(dirname "$(realpath "$(which fzf)")")/../share/fzf/completion.zsh"
 alias ord="tail -n +2 $HOME/matematisk_ordliste/verifiserte_termer.csv | fzf -d, --nth=1,2,3"
 
 # Neofetch
-neofetch --ascii_distro puppy
-
+neofetch
