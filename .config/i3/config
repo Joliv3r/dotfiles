@@ -185,6 +185,18 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 
+# swap two workspaces
+bindsym $mod+Control+0 exec --no-startup-id $HOME/.config/i3/i3-swap-workspaces 0
+bindsym $mod+Control+1 exec --no-startup-id $HOME/.config/i3/i3-swap-workspaces 1
+bindsym $mod+Control+2 exec --no-startup-id $HOME/.config/i3/i3-swap-workspaces 2 
+bindsym $mod+Control+3 exec --no-startup-id $HOME/.config/i3/i3-swap-workspaces 3 
+bindsym $mod+Control+4 exec --no-startup-id $HOME/.config/i3/i3-swap-workspaces 4 
+bindsym $mod+Control+5 exec --no-startup-id $HOME/.config/i3/i3-swap-workspaces 5 
+bindsym $mod+Control+6 exec --no-startup-id $HOME/.config/i3/i3-swap-workspaces 6 
+bindsym $mod+Control+7 exec --no-startup-id $HOME/.config/i3/i3-swap-workspaces 7 
+bindsym $mod+Control+8 exec --no-startup-id $HOME/.config/i3/i3-swap-workspaces 8 
+bindsym $mod+Control+9 exec --no-startup-id $HOME/.config/i3/i3-swap-workspaces 9 
+
 # reload the configuration file
 bindsym $mod+Control+r reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -196,7 +208,6 @@ bindsym mod1+l exec bash $HOME/.config/i3/i3lock-blurred
 bindsym $mod+semicolon exec --no-startup-id  rofi -dpi 300 -e "$(cat /var/local/background/current_background | rev | cut --complement -c 1-4 | rev)"
 bindsym $mod+comma exec --no-startup-id  pkill background && /home/joliver/.config/scripts/background old
 bindsym $mod+period exec --no-startup-id pkill background && /home/joliver/.config/scripts/background
-  
 
 # reload statusbar
 bindsym $mod+Shift+p exec pkill polybar && polybar

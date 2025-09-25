@@ -21,6 +21,9 @@ elif [ "$direction" == "prev" ]; then
     d=-1
     f=$((focused - 1))
     n=$((f - 10))
+elif [ "$direction" == "no" ]; then
+    echo "$focused"
+    exit 0
 else
     echo "Usage: $0 [next|prev] [all|...]"
     exit 1

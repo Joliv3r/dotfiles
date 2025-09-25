@@ -1,0 +1,7 @@
+#!/bin/sh
+
+current=$($HOME/.config/i3/i3-workspace no)
+new=$1
+
+i3-msg "rename workspace $new to temp; rename workspace $current to $new; rename workspace temp to $current"
+
