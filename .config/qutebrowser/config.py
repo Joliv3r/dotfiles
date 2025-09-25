@@ -276,6 +276,7 @@ else:
 c.url.searchengines = {
 
 	"DEFAULT" : "https://duckduckgo.com/?q={}",
+	"onion"   : "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/?q={}",
 	"arch"    : "https://wiki.archlinux.org/?search={}",
 	"pkg"     : "https://archlinux.org/packages/?q={}",
 	"aur"     : "https://aur.archlinux.org/packages/?K={}",
@@ -300,11 +301,14 @@ c.url.searchengines = {
 
     "regs"    : "https://wcaregs.netlify.app/#{}",
 
-    "nixpkg"  : "https://search.nixos.org/packages?from=0&size=50&sort=relevance&type=packages&query={}"
+    "nixpkg"  : "https://search.nixos.org/packages?from=0&size=50&sort=relevance&type=packages&query={}",
+    "emne"    : "https://wiki.math.ntnu.no/{}"
 }
 
 # explicitly search:
 c.url.searchengines["s"] = c.url.searchengines["DEFAULT"]
+
+# c.content.proxy = 'socks://localhost:9050/'
 
 # wikipedia and wiktionary for various languages
 for k in ["en", "no", "nn", "de"]:
