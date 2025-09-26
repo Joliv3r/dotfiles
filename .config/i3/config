@@ -173,6 +173,9 @@ bindsym $mod+Control+i exec --no-startup-id i3-msg move container to workspace n
 bindsym $mod+Shift+o exec --no-startup-id i3-msg workspace number $($HOME/.config/i3/i3-workspace next not)
 bindsym $mod+Shift+i exec --no-startup-id i3-msg workspace number $($HOME/.config/i3/i3-workspace prev not)
 
+bindsym $mod+Shift+period move workspace to output right
+bindsym $mod+Shift+comma move workspace to output left
+
 # move focused container to workspace
 bindsym $mod+Shift+0 move container to workspace number $ws0
 bindsym $mod+Shift+1 move container to workspace number $ws1
