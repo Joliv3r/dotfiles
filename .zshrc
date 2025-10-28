@@ -54,6 +54,9 @@ alias -g ...="../.."
 alias -g ....="../../.."
 alias -g .....="../../../.."
 
+# nix develop with zsh
+alias dev="nix develop -c \$SHELL"
+
 bindkey -e
 
 # Zoxide
