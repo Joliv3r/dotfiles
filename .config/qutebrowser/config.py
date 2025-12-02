@@ -120,7 +120,7 @@ c.colors.webpage.bg = c_background
 # + "st -c qute-edit -e vim -f {file} -c 'normal {line}G{column0}l' -c 'nnoremap <CR> ZZ'"]
 c.editor.command = ["qtile", "run-cmd", "--float", "alacritty", "-e", "nvim", "{file}", "-c", "normal {line}G{column0}1"]
 
-# Binds for modes other than normal mode (John-Aslak style)
+# Binds for modes other than normal mode 
 # config.bind("<Shift-Esc>", "mode-enter normal", mode="passthrough")
 # config.bind("<Insert>", "mode-enter normal", mode="passthrough")
 # config.bind("<Ctrl+n>", "completion-item-focus --history next", mode="command")
@@ -302,7 +302,8 @@ c.url.searchengines = {
     "regs"    : "https://wcaregs.netlify.app/#{}",
 
     "nixpkg"  : "https://search.nixos.org/packages?from=0&size=50&sort=relevance&type=packages&query={}",
-    "emne"    : "https://wiki.math.ntnu.no/{}"
+    "emne"    : "https://wiki.math.ntnu.no/{}",
+    "crates"  : "https://crates.io/search?q={}",
 }
 
 # explicitly search:
