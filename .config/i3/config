@@ -62,7 +62,8 @@ bindsym $mod+p exec passmenu -fn 'mononoki nerd font-16'
 bindsym $mod+z exec flameshot gui
 bindsym $mod+y exec java -jar /home/joliver/cubing/TNoodle-WCA-1.2.2.jar & firefox --new-window http://localhost:2014
 
-bindsym $mod+u exec setxkbmap -layout us -option ctrl:nocaps
+# bindsym $mod+u exec setxkbmap -layout us -option ctrl:nocaps
+bindsym $mod+u exec setxkbmap -layout us -option ctrl:nocaps && xkbcomp /etc/X11/keymap.xkb $DISPLAY
 bindsym $mod+Shift+u exec setxkbmap -layout no -option ctrl:nocaps
 
 # use Mouse+$mod to drag floating windows to their wanted position
@@ -281,3 +282,4 @@ client.background       #ffffff
 
 exec --no-startup-id polybar -c /home/joliver/.config/polybar/config.ini
 exec --no-startup-id /home/joliver/.config/scripts/background
+exec --no-startup-id xkbcomp /etc/X11/keymap.xkb $DISPLAY
