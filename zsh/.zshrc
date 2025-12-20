@@ -453,5 +453,5 @@ source "$(dirname "$(realpath "$(which fzf)")")/../share/fzf/completion.zsh"
 # Lookup for norwegian-english mathematical dictionary.
 alias ord="tail -n +2 $HOME/matematisk_ordliste/verifiserte_termer.csv | fzf -d, --nth=1,2,3"
 
-# Neofetch
-neofetch
+# Fastfetch
+fastfetch
