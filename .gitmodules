@@ -10,3 +10,5 @@
 [submodule "fzfedit"]
 	path = zsh/.config/zsh/fzfedit
 	url = https://gitlab.com/farlusiva/dotfiles.git
+[submodule "zsh/.config/zsh/fzfedit"]
+	branch = fzfedit
