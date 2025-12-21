@@ -5,11 +5,11 @@ dirs_with_dot_config=(
   "i3"
   "polybar"
   "qutebrowser"
+  "zsh"
 )
 
 dirs_without_dot_config=(
   "zathura"
-  "zsh"
 )
 
 for dir in "${dirs_without_dot_config[@]}"; do
