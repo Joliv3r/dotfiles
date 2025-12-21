@@ -1,3 +1,5 @@
+# https://gitlab.com/farlusiva/dotfiles/-/blob/54e1063fd60a5509e6fc125465b7dd1db6bafea8/zsh/.config/zsh/fzfedit.zsh
+# 
 # fzfedit.zsh
 #
 # Edit a file or cd into its dir.
