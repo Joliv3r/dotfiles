@@ -55,7 +55,8 @@ alias -g ....="../../.."
 alias -g .....="../../../.."
 
 # nix develop with zsh
-alias dev="nix develop -c \$SHELL"
+alias dev="nix develop --command \$SHELL"
+alias isodev="nix develop --ignore-env --command sh --norc"
 
 bindkey -e
 
@@ -157,46 +158,9 @@ nvim-cd () {
 
 alias vim=nvim-cd
 
-# https://gitlab.com/farlusiva/dotfiles/
-################################################################################
-#                          fzf in the shell (config)
-################################################################################
-
-# When true, always simulate an 'enter' press to let the prompt update itself.
-# This is the 'safe' option. False is for prompts that either automatically
-# update the dirs themselves, like simple PS1 prompts, or p10k-based prompts,
-# which we manually update here.
-# If _fzf-edit looks weird, then this should probably be switched.
-
-# Note: If using a simple PS1-based prompt where the dir automatically updates,
-# this should be set to 'false'. This is because 'true' looks bad on ctrl-k.
-# (Another solution would be to undo the commit that makes fzf-edit cd without
-# using the BUFFER.)
-
-_FZFEDIT_ALWAYS_ACCEPT_LINE="false"
-
-# Command to update the user's prompt. Used by fzf-edit.
-# Only needed for ctrl-o to look properly if _FZFEDIT_ALWAYS_ACCEPT_LINE is off.
-# and very much needed if it is on (unless prompt updates are automatic like for
-# simple PS1-based setups).
-_fzf-edit_update_prompt() {
-
-	# Powerlevel10k/powerlevel9k is probably in use
-	if echo "$PS1" | grep -q "_p9k__" && \
-	        typeset -f _p10k_redraw_prompt >/dev/null ; then
-		_p10k_redraw_prompt
-	fi
-}
-
-################################################################################
-#                           fzf in the shell (code)
-################################################################################
-
-# Obnoxiously long path because of stow + submodule structure
-tmp="$HOME/.config/zsh/fzfedit/zsh/.config/zsh/fzfedit.zsh"
-
+# fzfedit from https://gitlab.com/farlusiva/dotfiles
+tmp="$HOME/.config/zsh/fzfedit.zsh"
 [[ -f $tmp ]] && source $tmp
-
 unset tmp
 
 # Lookup for norwegian-english mathematical dictionary.
