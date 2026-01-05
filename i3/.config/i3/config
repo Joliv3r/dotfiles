@@ -61,6 +61,7 @@ bindsym $mod+p exec passmenu -fn 'mononoki nerd font-16'
 # bindsym $mod+p exec rofi-pass
 bindsym $mod+z exec flameshot gui
 bindsym $mod+y exec java -jar /home/joliver/cubing/TNoodle-WCA-1.2.2.jar & firefox --new-window http://localhost:2014
+bindsym $mod+x exec steam-run $HOME/.local/share/Steam/steamapps/common/Celeste/Celeste
 
 # bindsym $mod+u exec setxkbmap -layout us -option ctrl:nocaps
 bindsym $mod+u exec setxkbmap -layout us -option ctrl:nocaps && xkbcomp /etc/X11/keymap.xkb $DISPLAY
