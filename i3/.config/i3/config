@@ -60,7 +60,7 @@ bindsym $mod+Shift+b exec $browser2
 bindsym $mod+p exec passmenu -fn 'mononoki nerd font-16'
 # bindsym $mod+p exec rofi-pass
 bindsym $mod+z exec flameshot gui
-bindsym $mod+y exec java -jar /home/joliver/cubing/TNoodle-WCA-1.2.2.jar & firefox --new-window http://localhost:2014
+bindsym $mod+y exec java -jar $HOME/cubing/TNoodle-WCA-1.2.2.jar & firefox --new-window http://localhost:2014
 bindsym $mod+x exec steam-run $HOME/.local/share/Steam/steamapps/common/Celeste/Celeste
 
 # bindsym $mod+u exec setxkbmap -layout us -option ctrl:nocaps
@@ -217,8 +217,8 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+q exec i3-msg exit
 bindsym mod1+l exec bash $HOME/.config/i3/i3lock-custom
 bindsym $mod+semicolon exec --no-startup-id  rofi -dpi 300 -e "$(cat /var/local/background/current_background | rev | cut --complement -c 1-4 | rev)"
-bindsym $mod+comma exec --no-startup-id  pkill background && /home/joliver/.config/scripts/background old
-bindsym $mod+period exec --no-startup-id pkill background && /home/joliver/.config/scripts/background
+bindsym $mod+comma exec --no-startup-id  pkill background && $HOME/.config/scripts/background old
+bindsym $mod+period exec --no-startup-id pkill background && $HOME/.config/scripts/background
 
 # reload statusbar
 bindsym $mod+Shift+p exec pkill polybar && polybar
@@ -281,6 +281,6 @@ client.background       #ffffff
 # }
 
 
-exec --no-startup-id polybar -c /home/joliver/.config/polybar/config.ini
-exec --no-startup-id /home/joliver/.config/scripts/background
+exec --no-startup-id polybar -c $HOME/.config/polybar/config.ini
+exec --no-startup-id $HOME/.config/scripts/background
 exec --no-startup-id xkbcomp /etc/X11/keymap.xkb $DISPLAY
