@@ -58,6 +58,9 @@ alias -g .....="../../../.."
 alias dev="nix develop --command \$SHELL"
 alias isodev="nix develop --ignore-env --command sh --norc"
 
+# alias to always swallow zathura when opening
+alias zath="swallow zathura"
+
 bindkey -e
 
 # Zoxide
