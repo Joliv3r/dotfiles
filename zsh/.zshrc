@@ -47,6 +47,7 @@ alias sd='shutdown'
 # Options
 export VISUAL=nvim
 export EDITOR=$VISUAL
+export PDF_VIEWER="swallow zathura"
 
 # JAWK-style navigation shortcuts
 alias -g ..=".."

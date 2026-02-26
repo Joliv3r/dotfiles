@@ -1,4 +1,6 @@
+# Original script can be found here:
 # https://gitlab.com/farlusiva/dotfiles/-/blob/54e1063fd60a5509e6fc125465b7dd1db6bafea8/zsh/.config/zsh/fzfedit.zsh
+# This file is a modified version.
 # 
 # fzfedit.zsh
 #
@@ -8,14 +10,14 @@
 # Press ctrl-e => cd to dir and edit the file
 # Press ctrl-t => edit the file (no cd)
 # Press ctrl-k => cd to file (no edit)
-# Press ctrl-o => open in ranger (uses ranger_cd)
+# Press ctrl-o => show pdf in viewer
 # Press enter: do same action as arg (ctrl-e, ctrl-t, ctrl-k)
 # Usage: Source this file in your zshrc
 #
 # Dependencies:
 #	- fd, and $FD_COMMAND must be defined (we do it here if unset)
-#	- ranger and _ranger_cd (see my zshrc) for ctrl-o
 #	- $EDITOR for ctrl-e and ctrl-t
+#	- $PDF_VIEWER for ctrl-o
 #	- if not setting _fzf-edit_update_prompt by yourself, the helper function
 #	  _reset_the_prompt.
 
@@ -84,7 +86,7 @@ FZFEDIT_EXTRA_FZF_OPTS="--height 10"
 typeset -A _fzfedit_keybinds=(
 	[ctrl-e]="edit_cd"
 	[ctrl-t]="edit_nocd"
-	[ctrl-o]="cd"
+	[ctrl-o]="zathura_nocd"
 	# [ctrl-r]="ranger"
 )
 
@@ -110,6 +112,16 @@ _ctrl-k() {
 }
 zle -N _ctrl-k
 bindkey "^K" _ctrl-k
+
+_ctrl-o() {
+	if [[ -z "$BUFFER" ]]; then
+		_fzf-edit zathura_nocd 1
+	else
+		zle kill-line
+	fi
+}
+zle -N _ctrl-o
+bindkey "^O" _ctrl-o
 
 # Bind <C-j> on empty line to fzf-edit "global movement" mode.
 _ctrl-j() {
@@ -281,6 +293,7 @@ _fzf-edit() {
 		NEEDS_ACCEPT="true" ;;
 	edit_nocd) BUFFER+=" $EDITOR ${(q)sel}" && NEEDS_ACCEPT="true";;
 	cd) [[ "$dir" != "." ]] && builtin cd "$dir" ;;
+  zathura_nocd) BUFFER+=" $PDF_VIEWER ${(q)sel}" && NEEDS_ACCEPT="true";;
 	*) echo "$0: Action not found: '$action'" ;;
 	esac
 	# Redraw the prompt before the 'accept_line' if we have cd'd, so that the
