@@ -87,6 +87,7 @@ typeset -A _fzfedit_keybinds=(
 	[ctrl-e]="edit_cd"
 	[ctrl-t]="edit_nocd"
 	[ctrl-o]="zathura_nocd"
+  [ctrl-k]="cd"
 	# [ctrl-r]="ranger"
 )
 
@@ -115,7 +116,8 @@ bindkey "^K" _ctrl-k
 
 _ctrl-o() {
 	if [[ -z "$BUFFER" ]]; then
-		_fzf-edit zathura_nocd 1
+     local FD_COMMAND="$FD_COMMAND -e pdf -e djvu"
+     _fzf-edit zathura_nocd 1
 	else
 		zle kill-line
 	fi

@@ -45,7 +45,7 @@ alias venv='source /home/joliver/.venv/bin/activate'
 alias sd='shutdown'
 
 # Options
-export VISUAL=nvim
+export VISUAL=vim
 export EDITOR=$VISUAL
 export PDF_VIEWER="swallow zathura"
 
