@@ -116,7 +116,7 @@ bindkey "^K" _ctrl-k
 
 _ctrl-o() {
 	if [[ -z "$BUFFER" ]]; then
-     local FD_COMMAND="$FD_COMMAND -e pdf -e djvu"
+     local FD_COMMAND="$FD_COMMAND -E scrambles/ -E Printing/ -e pdf -e djvu"
      _fzf-edit zathura_nocd 1
 	else
 		zle kill-line
