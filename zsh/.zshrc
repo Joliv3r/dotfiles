@@ -6,8 +6,8 @@
 # fi
 
 # Plugins
-source /home/joliver/.zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /home/joliver/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOME/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Autocompletion
 autoload -Uz compinit
@@ -30,16 +30,7 @@ alias gp="git pull"
 alias ls='ls --color=auto'
 alias la='ls -A'
 alias grep='grep --color=auto'
-alias cdd="builtin cd /home/joliver/.dotfiles/"
-
-# Aliases for opening books
-alias galois='zathura /home/joliver/skool/books/BasicAbstractAlgebra.djvu'
-alias tplgc='zathura /home/joliver/skool/books/JanichTopology.djvu'
-alias tplg='zathura /home/joliver/skool/books/MunkresTopologyFirstCourse.djvu'
-alias opti='zathura /home/joliver/skool/books/NumericalOptimization.pdf'
-
-# Hacky alias for venv
-alias venv='source /home/joliver/.venv/bin/activate'
+alias cdd="builtin cd $HOME/.dotfiles/"
 
 # Dangerous
 alias sd='shutdown'
@@ -66,9 +57,6 @@ bindkey -e
 
 # Zoxide
 eval "$(zoxide init --cmd cd zsh)"
-
-# Some Haskell shit
-# [ -f "/home/joliver/.ghcup/env" ] && source "/home/joliver/.ghcup/env" # ghcup-env
 
 # PATH
 PATH="$PATH:/usr/local/texlive/2023/bin/x86_64-linux/"
