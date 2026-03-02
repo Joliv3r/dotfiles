@@ -20,5 +20,5 @@ done
 for dir in "${dirs_with_dot_config[@]}"; do
   echo "Handling $dir"
   mkdir -p "$target.config/$dir"
-  stow -d "$stowdir$dir/" -t "$target.config/$dir" .
+  stow -d "$stowdir$dir/.config" -t "$target.config" .
 done
