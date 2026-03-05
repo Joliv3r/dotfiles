@@ -118,8 +118,6 @@ _ctrl-o() {
 	if [[ -z "$BUFFER" ]]; then
      local FD_COMMAND="$FD_COMMAND -E scrambles/ -E Printing/ -e pdf -e djvu"
      _fzf-edit zathura_nocd 1
-	else
-		zle kill-line
 	fi
 }
 zle -N _ctrl-o
