@@ -304,6 +304,7 @@ c.url.searchengines = {
     "nixpkg"  : "https://search.nixos.org/packages?from=0&size=50&sort=relevance&type=packages&query={}",
     "emne"    : "https://wiki.math.ntnu.no/{}",
     "crates"  : "https://crates.io/search?q={}",
+    "scholar" : "https://scholar.google.com/scholar?q={}"
 }
 
 # explicitly search:
