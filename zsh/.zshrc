@@ -157,6 +157,13 @@ nix-run-flake () {
 alias nixrun=nix-run-flake
 
 
+# Workaround for sudo to use with aliases
+alias please='sudo '
+
+# Alias for rebuilding system
+alias rebuild='nixos-rebuild --flake "path://$HOME/nix-config/#$HOST"'
+
+
 # fzfedit from https://gitlab.com/farlusiva/dotfiles
 tmp="$HOME/.config/zsh/fzfedit.zsh"
 [[ -f $tmp ]] && source $tmp
