@@ -143,6 +143,20 @@ nvim-cd () {
 
 alias vim=nvim-cd
 
+
+# Alias for running nix flakes from github:joliv3r/flakes
+
+nix-run-flake () {
+  if [ $# -eq 0 ]; then
+    echo "You must provide a program to run"
+    return 1
+  fi
+  nix run "github:joliv3r/flakes#$1"
+}
+
+alias nixrun=nix-run-flake
+
+
 # fzfedit from https://gitlab.com/farlusiva/dotfiles
 tmp="$HOME/.config/zsh/fzfedit.zsh"
 [[ -f $tmp ]] && source $tmp
