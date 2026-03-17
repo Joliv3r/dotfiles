@@ -87,7 +87,7 @@ typeset -A _fzfedit_keybinds=(
 	[ctrl-e]="edit_cd"
 	[ctrl-t]="edit_nocd"
 	[ctrl-o]="zathura_nocd"
-  [ctrl-k]="cd"
+  [ctrl-l]="cd"
 	# [ctrl-r]="ranger"
 )
 
