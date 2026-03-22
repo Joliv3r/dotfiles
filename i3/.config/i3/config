@@ -48,7 +48,7 @@ set $mod Mod4
 
 # Set default apps
 set $browser qutebrowser
-set $browser1 firefox
+set $browser1 librewolf
 set $browser2 brave
 set $terminal alacritty
 
