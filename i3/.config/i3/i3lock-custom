@@ -1,7 +1,7 @@
 rm -f /tmp/screen_locked.png
 
 # Take a screenshot
-scrot /tmp/screen_locked.png
+scrot --silent /tmp/screen_locked.png
 
 # Lock screen displaying this image.
 i3lock -i /tmp/screen_locked.png
