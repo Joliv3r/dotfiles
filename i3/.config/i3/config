@@ -226,7 +226,7 @@ bindsym $mod+comma exec --no-startup-id  pkill background && $HOME/.config/scrip
 bindsym $mod+period exec --no-startup-id pkill background && $HOME/.config/scripts/background
 
 # reload statusbar
-bindsym $mod+Shift+p exec pkill polybar && polybar
+bindsym $mod+Shift+p exec pkill polybar && polybar main && polybar side
 
 # resize window (you can also use the mouse for that)
 # mode "resize" {
@@ -290,3 +290,4 @@ exec --no-startup-id polybar -c $HOME/.config/polybar/config.ini main
 exec --no-startup-id polybar -c $HOME/.config/polybar/config.ini side
 exec --no-startup-id $HOME/.config/scripts/background
 exec --no-startup-id xkbcomp /etc/X11/keymap.xkb $DISPLAY
+exec --no-startup-id unclutter --start-hidden --jitter 20
