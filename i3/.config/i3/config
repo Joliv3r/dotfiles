@@ -290,4 +290,5 @@ exec --no-startup-id polybar -c $HOME/.config/polybar/config.ini main
 exec --no-startup-id polybar -c $HOME/.config/polybar/config.ini side
 exec --no-startup-id $HOME/.config/scripts/background
 exec --no-startup-id xkbcomp /etc/X11/keymap.xkb $DISPLAY
+exec --no-startup-id if [[ "HOST" == "hilbert" ]]; then xinput set-prop 12 189 0; fi
 exec --no-startup-id unclutter --start-hidden --jitter 20
