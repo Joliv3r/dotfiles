@@ -29,7 +29,7 @@ alias cdd="builtin cd $HOME/.dotfiles/"
 alias sd='shutdown'
 
 # Options
-export VISUAL=vim
+export VISUAL=nvim
 export EDITOR=$VISUAL
 export PDF_VIEWER="swallow zathura"
 
