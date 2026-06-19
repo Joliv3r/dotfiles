@@ -30,6 +30,9 @@
 #
 # Used by _fzf-edit
 # https://github.com/romkatv/powerlevel10k/issues/2048#issuecomment-1271186812
+
+local EDITOR=vim
+
 if ! declare -f _reset_the_prompt >/dev/null 2>&1; then
 	_reset_the_prompt() {
 		local f
